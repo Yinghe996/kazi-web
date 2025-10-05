@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文明演进模拟器</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">文明演进模拟器</div>
+                <div id="room-display" style="display: none;">
+                    房间号: <span id="room-number">0000</span> | 
+                    玩家: <span id="player-name">未设置</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 主页 -->
+        <section id="home-page" class="page active">
+            <h1 class="game-title">文明演进模拟器</h1>
+            
+            <div class="hero">
+                <div class="slideshow">
+                    <div class="slide active">
+                        <div class="slide-content">
+                            <h2 class="slide-title">创造你的文明</h2>
+                            <p>从石器时代到工业革命，引导你的文明走向繁荣</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2 class="slide-title">探索未知世界</h2>
+                            <p>发现新资源，建立贸易路线，扩张你的领土</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2 class="slide-title">应对历史挑战</h2>
+                            <p>面对自然灾害、外敌入侵和内部动荡的考验</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">游戏介绍</h2>
+                <div class="game-intro">
+                    <div class="intro-card">
+                        <div class="intro-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <h3>动态地图系统</h3>
+                        <p>地图会随着时间自动演变，河流改道、村庄扩张、森林蔓延，创造无限可能的世界。</p>
+                    </div>
+                    <div class="intro-card">
+                        <div class="intro-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>多人在线协作</h3>
+                        <p>与朋友一起游戏，输入相同房间号即可进入同一世界，共同建设文明。</p>
+                    </div>
+                    <div class="intro-card">
+                        <div class="intro-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <h3>历史年代演进</h3>
+                        <p>体验从古代到近代的12个不同历史时期，每个时期都有独特的挑战和机遇。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 2rem 0;">
+                <button id="start-game-btn" class="btn btn-accent btn-large">
+                    <i class="fas fa-play"></i> 开始游戏
+                </button>
+            </div>
+        </section>
+
+        <!-- 房间输入页面 -->
+        <section id="room-page" class="page">
+            <div class="section">
+                <h2 class="section-title">加入游戏房间</h2>
+                <div class="room-input">
+                    <p>输入四位数字房间号，与朋友进入同一游戏世界</p>
+                    <div class="input-group">
+                        <label for="player-name-input">你的名字</label>
+                        <input type="text" id="player-name-input" maxlength="15" placeholder="请输入你的名字">
+                    </div>
+                    <div class="input-group">
+                        <label for="room-code">房间号码</label>
+                        <input type="text" id="room-code" maxlength="4" placeholder="例如: 1234">
+                    </div>
+                    <button id="join-room-btn" class="btn btn-accent">
+                        <i class="fas fa-door-open"></i> 进入房间
+                    </button>
+                    <button id="create-room-btn" class="btn">
+                        <i class="fas fa-plus"></i> 创建新房间
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 角色选择页面 -->
+        <section id="character-page" class="page">
+            <div class="section">
+                <h2 class="section-title">选择你的角色</h2>
+                <div class="players-list" id="players-list">
+                    <h3>房间玩家</h3>
+                    <div id="players-container">
+                        <!-- 玩家列表将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                <div class="character-container" id="character-list">
+                    <!-- 角色将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏主页面 -->
+        <section id="game-page" class="page">
+            <div class="game-container">
+                <!-- 左侧面板 -->
+                <div class="game-panel left">
+                    <div>
+                        <h3 class="section-title">随机数字</h3>
+                        <div class="generator-container">
+                            <button class="btn generator-btn" data-type="two">两位数</button>
+                            <button class="btn generator-btn" data-type="three">三位数</button>
+                            <button class="btn generator-btn" data-type="four">四位数</button>
+                        </div>
+                        <div class="result-box" id="number-result">点击生成</div>
+                    </div>
+                    
+                    <div class="resource-input">
+                        <h3 class="section-title">资源管理</h3>
+                        <div class="resource-row">
+                            <label>格位资源:</label>
+                            <input type="text" id="resource-input" placeholder="输入数字">
+                        </div>
+                        <div class="resource-output">
+                            <p>预计基础产出: <span id="resource-output">0</span></p>
+                        </div>
+                    </div>
+
+                    <!-- 玩家列表 -->
+                    <div class="players-list">
+                        <h3 class="section-title">在线玩家</h3>
+                        <div id="game-players-container">
+                            <!-- 玩家列表将通过JavaScript动态生成 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 中间地图区域 -->
+                <div class="game-panel center">
+                    <div class="era-display">
+                        <div class="era-name" id="era-name">景章竹年</div>
+                        <div class="era-description" id="era-description">皇室以 "文治" 为核心国策，在都城设 "崇文馆"，召集天下学士整理前朝散佚典籍...</div>
+                    </div>
+                    <div class="map-container" id="map-grid">
+                        <!-- 地图格子将通过JavaScript动态生成 -->
+                    </div>
+                    <div class="game-controls">
+                        <button id="next-era-btn" class="btn btn-accent">
+                            <i class="fas fa-forward"></i> 改变年代
+                        </button>
+                        <button id="next-turn-btn" class="btn">
+                            <i class="fas fa-step-forward"></i> 下一回合
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 右侧面板 -->
+                <div class="game-panel right">
+                    <div>
+                        <h3 class="section-title">事件卡</h3>
+                        <button id="draw-card-btn" class="btn">
+                            <i class="fas fa-dice"></i> 抽取事件卡
+                        </button>
+                        <div class="card-display" id="event-card">
+                            <h4 id="event-title">事件标题</h4>
+                            <p id="event-description">点击抽取事件卡</p>
+                            <div class="card-effect">
+                                <p id="event-effect">效果: 待添加</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="section-title">人物能力</h3>
+                        <div class="character-ability">
+                            <p id="character-ability">选择角色后显示能力</p>
+                        </div>
+
+                        <!-- 聊天区域 -->
+                        <div class="chat-container">
+                            <h3 class="section-title">聊天</h3>
+                            <div class="chat-messages" id="chat-messages">
+                                <div class="chat-message">系统: 欢迎来到文明演进模拟器！</div>
+                            </div>
+                            <div class="chat-input">
+                                <input type="text" id="chat-input" placeholder="输入消息...">
+                                <button class="btn" id="send-chat-btn">发送</button>
+                            </div>
+                        </div>
+                        
+                        <button id="exit-game-btn" class="btn btn-danger" style="margin-top: 1rem;">
+                            <i class="fas fa-door-open"></i> 退出游戏
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
